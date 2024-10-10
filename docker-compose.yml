@@ -1,0 +1,30 @@
+services:
+  fwupapp:
+    build: .
+    command: >
+      sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - my-postgres
+    env_file: 
+      - ./project.env  # Load the environment variables from the project.env file
+
+  my-postgres:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file: 
+      - ./project.env  # Load the environment variables from the project.env file
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
