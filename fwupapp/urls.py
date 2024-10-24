@@ -15,8 +15,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-
+from django.urls import path, include
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),  # Admin route
+    path('', include('FWapp.urls')),  # Include app-specific URLs
 ]
+    
+
+# from django.contrib import admin
+# from django.urls import path, include
+# from FWapp import views
+# #from django.conf import settings
+
+# urlpatterns = [
+       
+#     #path('', include('FWapp.urls')),
+#     path('admin/', admin.site.urls),
+#     #path('oauth2/', include('django_auth_adfs.drf_urls')),
+#     path('oauth2/', include('django_auth_adfs.urls')),
+#     path('', include('FWapp.urls')),
+    
+# ]
